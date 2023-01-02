@@ -27,9 +27,9 @@ public class ProductService {
         return repository.findById(id);
     }
 
-    public Product update(Product product){
+    public Optional<Product> update(Product product){
         Optional<Product> id = repository.findById(product.getId());
-        return id.map(product1 -> repository.save(product)).orElse(null);
+        return id.map(product1 -> repository.save(product));
     }
     public Boolean deleteById(Long id){
         Optional<Product> optional = repository.findById(id);
