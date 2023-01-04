@@ -1,16 +1,20 @@
 package com.example.springrestapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 public class Product {
     @Id
@@ -35,6 +39,14 @@ public class Product {
     @Column(name = "product_stock" , nullable = false , length = 100)
     private Integer stock;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Category category;
+    @ManyToMany()
+    @JoinTable(name = "tbl_supplier_product" , joinColumns = @JoinColumn(name = "product_id") ,
+            inverseJoinColumns = @JoinColumn(name = "supplier_id"))
+    @JsonManagedReference
+    private Set<Supplier> suppliers;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -42,6 +54,9 @@ public class Product {
         Product product = (Product) o;
         return id != null && Objects.equals(id, product.id);
     }
+
+
+
     @Override
     public int hashCode() {
         return getClass().hashCode();

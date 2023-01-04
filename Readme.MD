@@ -217,3 +217,6 @@ spring.jpa.hibernate.ddl-auto = update
 ```
 
 
+#### link derived query sprng jpa
+https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#appendix.query.method.predicate
+
